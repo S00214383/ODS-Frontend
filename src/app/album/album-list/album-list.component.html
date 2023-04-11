@@ -1,0 +1,55 @@
+
+ <div  >
+
+
+  
+  <app-album-details   *ngIf="currentalbum && !showalbumForm" [album]="currentalbum"></app-album-details>
+
+  <div *ngIf="message" class="alert alert-warning alert-dismissible show" role="alert">
+    <strong>Opps</strong> {{message}}
+    <button type="button" class="btn-close" (click)="dismissAlert()" aria-label="Close"></button>
+  </div>
+  <!-- <div class="d-flex justify-content-center">
+  <button (click)="openAddalbum()" *ngIf="!showalbumForm" class="btn btn-lg btn-outline-primary">Add album</button>
+
+
+  <button (click)="openEditalbum()" *ngIf="!showalbumForm" [disabled]="!currentalbum"
+     class="btn btn-lg btn-outline-primary">Edit album</button>
+ 
+   <button (click)="deletealbum()" *ngIf="!showalbumForm" [disabled]="!currentalbum"
+     class="btn btn-lg btn-outline-danger">Delete album</button> 
+
+    </div> -->
+  <app-album-form *ngIf="showalbumForm" (albumFormClose)="albumFormClose($event)" [album]="currentalbum">
+</app-album-form> 
+
+ <div class="d-flex justify-content-center">
+  <button (click)="openAddalbum()" *ngIf="!showalbumForm" class="btn btn-lg btn-outline-primary col-md-2">Add album</button>
+
+
+  <button (click)="openEditalbum()" *ngIf="!showalbumForm" [disabled]="!currentalbum"
+     class="btn btn-lg btn-outline-primary col-md-2">Edit album</button>
+ 
+   <button (click)="deletealbum()" *ngIf="!showalbumForm" [disabled]="!currentalbum"
+     class="btn btn-lg btn-outline-danger col-md-2">Delete album</button> 
+
+ 
+  
+  </div>
+   <div *ngIf=" !showalbumForm">
+
+    <app-album-row
+    
+    *ngFor="let b of albumList" [album]="b" (click)='clicked(b)'
+
+    [class.bg-info]="isSelected(b)" [class.text-black]="isSelected(b)"
+    
+    > 
+  
+  </app-album-row>
+
+
+ </div>
+
+</div>
+
