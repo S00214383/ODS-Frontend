@@ -21,12 +21,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StarRatingModule } from 'angular-star-rating';
 
-import { defineComponents, IgcRatingComponent } from 'igniteui-webcomponents';
+
 
 
 import { AkitaNgDevtools } from "@datorama/akita-ngdevtools";
 
-defineComponents(IgcRatingComponent);
+
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
@@ -60,11 +60,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
     StarRatingModule.forRoot(),
     
-    environment.production
-    ? []
-    : AkitaNgDevtools.forRoot({
-        maxAge: 25,
-      }),
 
   ],
 
