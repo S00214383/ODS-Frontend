@@ -22,12 +22,14 @@ export class albumFormComponent implements OnInit {
     this.albumForm = new FormGroup({
       title: new FormControl (this.album?.title, [Validators.required, Validators.minLength(4)]),
       year: new FormControl (this.album?.year, [Validators.required]),
+      albumImage: new FormControl(this.album?.albumImage, [Validators.required]),
+      albumDesc: new FormControl(this.album?.albumDesc, [Validators.required] ),
       
       artist: new FormGroup({
         artistName: new FormControl(this.album?.artist?.artistName),
         genre: new FormControl(this.album?.artist?.genre), 
         recCompany: new FormControl(this.album?.artist?.recCompany), 
-
+        
       })
     })
   }
@@ -39,6 +41,7 @@ export class albumFormComponent implements OnInit {
   }
  
   closeForm() {
+    
     this.albumFormClose.emit(undefined)
 
   }

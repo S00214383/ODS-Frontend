@@ -37,6 +37,16 @@ export class albumService {
     );
 
   }
+
+  getByTitle(title:string): Observable<album[]> {
+    console.log("get albums specifit title " );
+    return this.http.get<album[]>('http://localhost:3000/api/albums?title='+title)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   
   addalbum(album: album): Observable<album> {
     return this.http.post<album>(this.dataUri, album)
@@ -75,6 +85,9 @@ export class albumService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+
+ 
 
 }
 

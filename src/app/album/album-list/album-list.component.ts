@@ -1,6 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { album } from '../../album'
 import { albumService } from '../../../album.service';
+import { Title } from '@angular/platform-browser';
+
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-album-list',
   templateUrl: './album-list.component.html',
@@ -60,25 +66,61 @@ albumFormClose(album?: album): void {
   }
 }
 
-addNewalbum(newalbum : album): void {
+// addNewalbum(newalbum : album): void {
+//   console.log('adding new album ' + JSON.stringify(newalbum));
+//   this.albumService.addalbum({ ...newalbum })
+//     .subscribe({
+//       next: album => {
+//         console.log(JSON.stringify(album) + ' has been added');
+//         this.message = "new album has been added";
+//       },
+//       error: (err) => this.message = err
+//     });
+
+//   // so the updated list appears
+
+//  this.ngOnInit();
+// }
+
+addNewalbum(newalbum: album): void {
   console.log('adding new album ' + JSON.stringify(newalbum));
-  this.albumService.addalbum({ ...newalbum })
-    .subscribe({
-      next: album => {
-        console.log(JSON.stringify(album) + ' has been added');
-        this.message = "new album has been added";
-      },
-      error: (err) => this.message = err
-    });
+  this.albumService.addalbum({ ...newalbum }).subscribe({
+    next: album => {
+      console.log(JSON.stringify(album) + ' has been added');
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'New album has been added',
+        confirmButtonText: 'OK'
+      });
+    },
+    error: (err) => {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to add new album',
+        confirmButtonText: 'OK'
+      });
+    }
+  });
 
   // so the updated list appears
+  this.ngOnInit();
+}
 
- this.ngOnInit();
+getByTitle(title:string):void{
+  this.albumService.getByTitle(title).subscribe({ 
+    next: (value:album[])=> this.albumList = value, 
+    complete:() => console.log('album service finished'), 
+    error: (mess)=>this.message = mess})
 }
 
 deletealbum() {
   console.log('deleting a album ');
   if (this.currentalbum) {
+
+    
     this.albumService.deletealbum(this.currentalbum._id)
       .subscribe({
         next: album => {
@@ -88,13 +130,16 @@ deletealbum() {
         error: (err) => this.message = err
       });
   }
-
   // so the updated list appears
 
   this.ngOnInit();
   this.currentalbum=undefined;
 
 }
+
+
+
+
 
 updatealbum(id: string, album: album): void {
   console.log('updating ');
@@ -103,9 +148,22 @@ updatealbum(id: string, album: album): void {
     .subscribe({
       next: album => {
         console.log(JSON.stringify(album) + ' has been updated');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'The album has been updated.',
+        });
         this.message = " album has been updated";
       },
-      error: (err) => this.message = err
+      error: (err) => {
+        console.error(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred while updating the album.',
+        });
+        this.message = err;
+      }
     });
   // so the updated list appears
 
@@ -127,11 +185,20 @@ openEditalbum(): void {
 }
 
 
-
-
-}
+// searchTitle(): void
+// {
+//   this.albumService.getByTitle(this.album?.title)
   
+   
+   
+//   };
+// }
 
+
+
+
+  
+}
   
 
 

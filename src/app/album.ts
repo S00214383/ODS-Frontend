@@ -4,6 +4,8 @@ export interface album {
     year?: number;
     __v: number;
     artist: Artist;
+    albumImage: string;
+    albumDesc: string;
    
 }
 export interface Artist {
@@ -11,6 +13,7 @@ export interface Artist {
     recCompany: string;
     artistName: string;
     _id: string;
+    
     
 }
 
